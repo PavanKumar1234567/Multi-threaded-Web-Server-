@@ -48,7 +48,7 @@ HTTP_Response *handle_request(string req) {
   string url = string("html_files") + request->url;
    
   response->HTTP_version = "HTTP/1.1";
-   cout<<"we are in handle function\n"<<endl;
+   //cout<<"we are in handle function\n"<<endl;
   struct stat sb;
   if (stat(url.c_str(), &sb) == 0) // requested path exists
   {
@@ -85,11 +85,11 @@ HTTP_Response *handle_request(string req) {
 
       
     }
-    cout<<body<<endl;
+    //cout<<body<<endl;
     in.close();
     //in>>body;
     response->body=body;
-    cout<<"path exist\n"<<endl;
+    //cout<<"path exist\n"<<endl;
     /*
     TODO : set the remaining fields of response appropriately
     */

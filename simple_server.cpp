@@ -9,8 +9,8 @@
 #include <string.h>
 #include <netinet/in.h>
 #include <bits/stdc++.h>
-
 #include <pthread.h>
+
 using namespace std;
 
 queue<int> q;
@@ -19,6 +19,11 @@ pthread_cond_t cond_var=PTHREAD_COND_INITIALIZER;
 void error(char *msg) {
   perror(msg);
   exit(1);
+}
+
+void signalhandler(int a)
+{
+	exit(0);
 }
 void *start_function(void *arg) {
 
@@ -56,10 +61,10 @@ void *start_function(void *arg) {
    int i=0;
   for(i=0;i<str.length();i++){
     buffer[i]=str[i];
-    cout<<str[i];
+    //cout<<str[i];
   }
   buffer[i]='\0';
-  cout<<buffer<<endl;
+  //cout<<buffer<<endl;
 
   n = write(element,buffer,2048);
 
@@ -79,6 +84,8 @@ int main(int argc, char *argv[]) {
   char buffer[256];
   struct sockaddr_in serv_addr, cli_addr;
   int n;
+  
+  signal(SIGINT,signalhandler);
 
   if (argc < 2) {
     fprintf(stderr, "ERROR, no port provided\n");
@@ -107,7 +114,7 @@ int main(int argc, char *argv[]) {
 
   /* listen for incoming connection requests */
 
-  listen(sockfd, 5);
+  listen(sockfd,2000);
   clilen = sizeof(cli_addr);
 
   printf("server is listenting to port %d...\n",portno);
@@ -141,6 +148,7 @@ int main(int argc, char *argv[]) {
    pthread_create(&thread_id,NULL,start_function,&thread_arg);
   }*/
   }
-
+  //q.clear();
+  exit(0);
   return 0;
 }
